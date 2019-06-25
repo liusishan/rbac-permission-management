@@ -1,0 +1,64 @@
+<!--头部菜单栏-->
+<div class="layui-header" th:fragment="commonHeader">
+    <div class="layui-logo">后台</div>
+    <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item"><a href="">控制台</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:void(0);">其它系统</a>
+            <dl class="layui-nav-child">
+                <dd><a href="">邮件管理</a></dd>
+                <dd><a href="">消息管理</a></dd>
+                <dd><a href="">授权管理</a></dd>
+            </dl>
+        </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+            <a href="javascript:void(0);">
+                <img th:src="@{/face.jpg}" class="layui-nav-img">
+                [[${session.loginUser.username}]]
+            </a>
+            <dl class="layui-nav-child">
+                <dd><a href="">基本资料</a></dd>
+                <dd><a href="">安全设置</a></dd>
+            </dl>
+        </li>
+        <!--<li class="layui-nav-item" ><a th:href="@{/logout}">退出</a></li>-->
+        <li class="layui-nav-item" ><a href="javascript:void(0);" onclick="logout()">退出</a></li>
+    </ul>
+</div>
+
+<!--注意, 只支持两层菜单-->
+<!--左侧导航栏-->
+<div class="layui-side layui-bg-black" th:fragment="commonMenu(index)">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域 -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);"><i class="layui-icon layui-icon-home"></i><cite>&nbsp;&nbsp;主页</cite></a>
+            </li>
+
+            <li th:each="perm:${session.rootPermission.children}" class="layui-nav-item"><!--layui-nav-itemed 该类是默认打开菜单-->
+                <a th:if="${perm.children.size() != 0}" href="javascript:void(0);">
+                    <i th:class="${perm.icon}"></i>
+                    <cite>&nbsp;&nbsp;[[${perm.name}]]</cite>
+                </a>
+                <dl th:if="${perm.children.size() != 0}" class="layui-nav-child">
+                    <dd th:each="child:${perm.children}">
+                        <a th:href="${child.url}"><i th:class="${child.icon}"></i><cite>&nbsp;&nbsp;[[${child.name}]]</cite></a>
+                    </dd>
+                </dl>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<!--底部区域-->
+<div class="layui-footer" th:fragment="commonFooter">
+    © 666 - 底部固定区域
+</div>
+
+
+

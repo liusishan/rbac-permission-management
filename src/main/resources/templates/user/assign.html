@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <title>角色分配</title>
+</head>
+<body>
+<!--body区-->
+<div class="layui-layout layui-layout-admin">
+
+    <!-- 内容主体区域 -->
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <!--穿梭框-->
+            <div id="transfer01" class="demo-transfer"></div>
+        </div>
+    </div>
+    <!-- 内容主体区域结束 -->
+
+
+</div>
+<!--body区结束-->
+<script th:src="@{/jquery/jquery.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    layui.use(['element', 'layer', 'laydate', 'table', 'util', 'transfer'], function () {
+        let $ = layui.$
+            , element = layui.element
+            , laydate = layui.laydate // 日期组件
+            , table = layui.table // 引入数据表格模块
+            , transfer = layui.transfer // 引入穿梭框
+            , layer = layui.layer // 引入弹框功能
+            , util = layui.util; // 引入右下方小工具
+
+        let exitRoles;
+        let allRoles;
+        // 请求域中取出用户id
+        let userId = [[${userId}]];
+        console.log(userId);
+        $.ajax({
+            type: 'POST',
+            url: '/user/getUserRoles',
+            data: {"userId": userId},
+            success: function (result) {
+                if (result.code == 200) {
+                    // 系统中所有的角色
+                    allRoles = result.data.allRoles;
+                    // 已经分配的角色
+                    exitRoles = result.data.exitRoles;
+
+                    // 将已经分配的角色的id取出来, 封装进数组
+                    let arr = [];
+                    for (let i = 0; i < exitRoles.length; i++) {
+                        arr.push(exitRoles[i].id);
+                    }
+
+                    transfer.render({
+                        elem: '#transfer01'
+                        , data: allRoles
+                        , value: arr
+                        , title: ['未分配的角色', '已分配的角色']  //自定义标题
+                        , parseData: function (res) {
+                            return {
+                                "value": res.id //数据值
+                                , "title": res.remark //数据标题
+                            }
+                        }
+                        , showSearch: true // 显示搜索框
+                        , onchange: function (obj, index) { // 穿梭时的回调函数
+                            // 移动的数据就是obj
+                            // 将已经分配的角色的id取出来, 封装进数组
+                            var roleIds = "";
+                            for (var i = 0; i < obj.length; i++) {
+                                roleIds += obj[i].value;
+                                roleIds += ",";
+                            }
+                            roleIds = roleIds.substr(0, roleIds.length - 1);
+                            if (index == 0) {
+                                // 如果数据来自左边, 给用户添加角色
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/user/assignUserRoles',
+                                    data: {"userId": userId, "roleIds": roleIds, "type": 0},
+                                    success: function (result) {
+                                        if (result.code == 200) {
+                                            layer.msg("分配成功", {time: 1000});
+                                            // 重载实例
+                                            transfer.reload('transfer01', {
+                                                title: ['未分配的角色', '已分配的角色']
+                                            });
+                                        } else {
+                                            layer.msg("分配失败!", {time: 1000});
+                                        }
+                                    }
+                                });
+                            }
+                            if (index == 1) {
+                                // 如果数据来自右边, 取消用户的角色
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/user/assignUserRoles',
+                                    data: {"userId": userId, "roleIds": roleIds, "type": 1},
+                                    success: function (result) {
+                                        if (result.code == 200) {
+                                            layer.msg("分配成功", {time: 1000});
+                                            // 重载实例
+                                            transfer.reload('transfer01', {
+                                                title: ['未分配的角色', '已分配的角色']
+                                            });
+                                        } else {
+                                            layer.msg("分配失败!", {time: 1000});
+                                        }
+                                    }
+                                });
+                            }
+                        }
+
+                    });
+
+                    // 重载实例
+                    transfer.reload('transfer01', {
+                        title: ['未分配的角色', '已分配的角色']
+                    });
+
+                }
+            }
+        });
+
+
+    });
+
+</script>
+
+</body>
+</html>
+

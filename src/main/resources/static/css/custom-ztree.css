@@ -1,0 +1,13 @@
+/*自定义ztree的样式--*/
+#permissionTree {
+    background: #fbfbfb00;
+    width: 360px;
+    height: 470px;
+    border: none;
+}
+
+ #permissionTree *{
+     font-size: 15px;
+     margin: 2px;
+ }
+

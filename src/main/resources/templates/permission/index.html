@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/ztree/zTreeStyle.css}"/>
+    <link rel="stylesheet" th:href="@{/css/custom-ztree.css}"/>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <script th:src="@{/jquery/jquery.js}"></script>
+    <script th:src="@{/ztree/jquery.ztree.all-3.5.min.js}"></script>
+    <script th:src="@{/layui/layui.js}"></script>
+    <title>权限维护</title>
+</head>
+<body>
+<!--表单区域 ※ 根据layui要求此处最好放在body标签旁-->
+<div id="form01" class="layui-row" style="display: none">
+    <div class="layui-col-md11" id="form001">
+        <form class="layui-form" id="form0001" lay-filter="form_example">
+
+            <div class="layui-form-item">
+                <!--表单不顶边-->
+            </div>
+
+            <!--文字输入框-->
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限名</label>
+                <div class="layui-input-inline">
+                    <!--lay-verify="required" : 必须填写此项-->
+                    <input type="text" name="name" id="name" required lay-verify="required" placeholder="请输入权限名"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">url</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="url" id="url" required lay-verify="required" placeholder="请输入url"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="orderNum" id="orderNum" required lay-verify="required"
+                           placeholder="请输入排序字段"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">图标</label>
+                <div class="layui-input-block">
+                    <input type="text" name="icon" id="icon" required lay-verify="required" placeholder="请输入icon图标"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限类型</label>
+                <div class="layui-input-inline">
+                    <select name="type" lay-verify="required" id="type">
+                        <option value=""></option>
+                        <option value="0">目录</option>
+                        <option value="1">菜单</option>
+                        <option value="2">按钮</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--文本域-->
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注信息</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" id="remark" placeholder="请输入备注信息" class="layui-textarea"></textarea>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<!--表单结束-->
+
+<!--主体内容区-->
+<div class="layui-layout layui-layout-admin">
+    <div>
+        <ul id="permissionTree" class="ztree" style="height: 700px; width: 500px;"></ul>
+    </div>
+</div>
+
+<script>
+    let layer;
+    let form;
+    layui.use(['layer', 'form'], function () {
+        layer = layui.layer; // 引入弹框功能
+        form = layui.form; // 引入表单模块
+
+
+        // ztree的参数设置
+        let setting = {
+            // 异步加载树结点数据
+            async: {
+                enable: true, //表示异步加载生效
+                // url: "/permission/loadAssignData/" + roleId, // 异步加载时访问的页面
+                url: "/permission/loadData", // 异步加载时访问的页面
+                autoParam: ["id", "name=n", "level=lv"], // 参数, 只能传节点中有的属性
+                type: 'post'
+            },
+            // 回调
+            callback: {
+                onClick: onClick // 节点的单击事件
+            },
+            //树的展现方式
+            view: {
+                showIcon: true, // 是否显示图标, 默认就是t
+                dblClickExpand: false, // 屏蔽节点的双击事件
+                showLine: true, //是否显示节点间的连线, 默认就是t
+                selectedMulti: false, //多选: 不支持
+                addHoverDom: addHoverDom, //鼠标移入节点
+                removeHoverDom: removeHoverDom,// 鼠标移除节点
+                addDiyDom: addDiyDom
+            },
+        };
+
+        // 自定义修改节点. treeId:树的id. treeNode:当前结点的json数据
+        function addDiyDom(treeId, treeNode) {
+            //获取每个结点的图标
+            const icoObj = $("#" + treeNode.tId + "_ico");
+            //如果该菜单有图标
+            if (treeNode.icon) {
+                //删除图标的默认icon, 将json中icon替换进来, 设置icon图标背景色是空的
+                icoObj.removeClass("button ico_docu ico_open")
+                    .addClass(treeNode.icon).css("background", "");
+            }
+        }
+
+        // 异步初始化树
+        $.fn.zTree.init($("#permissionTree"), setting);
+
+        // 鼠标移入
+        function addHoverDom(treeId, treeNode) {
+            //获取结点对应的<a></a>标签, 这个a标签包含结点的图标和结点的文字
+            let aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
+            //设置节点的链接
+            aObj.attr("href", "javascript:;");
+            if (treeNode.editNameFlag || $("#btnGroup" + treeNode.tId).length > 0) return;
+            // 结点后的按钮
+            let s = '<span id="btnGroup' + treeNode.tId + '">';
+            //level该属性记录结点的层级. 如果当前结点是根节点
+            if (treeNode.level == 0) {
+                //节点后显示的按钮只有一个,是一个小加号
+                s += '<a class="ayui-btn layui-btn-xs" ' +
+                    'style="margin-left:3px;padding-top:0px;" ' +
+                    'onclick="addN(' + treeNode.id + ')" ' +
+                    'href="#">&nbsp;<i class="layui-icon layui-icon-add-circle-fine    "></i></a>';
+                //如果当前结点是一级结点
+            } else if (treeNode.level == 1) {
+                //节点后显示2个(编辑,添加)或3个(编辑,删除,添加)按钮. 如果该结点没有子节点, 那么就显示三个按钮
+                s += '<a class="ayui-btn layui-btn-xs" ' +
+                    'style="margin-left:3px;padding-top:0px;" ' +
+                    'onclick="editN(' + treeNode.id + ')" ' +
+                    'href="#">&nbsp;<i class="layui-icon layui-icon-edit    "></i></a>';
+                if (treeNode.children.length == 0) {
+                    s += '<a class="ayui-btn layui-btn-xs" ' +
+                        'style="margin-left:3px;padding-top:0px;" ' +
+                        'onclick="delN(' + treeNode.id + ')" ' +
+                        'href="#">&nbsp;<i class="layui-icon layui-icon-delete    " ></i></a>';
+                }
+                s += '<a class="ayui-btn layui-btn-xs" ' +
+                    'style="margin-left:3px;padding-top:0px;" ' +
+                    'onclick="addN(' + treeNode.id + ')" ' +
+                    'href="#">&nbsp;<i class="layui-icon layui-icon-add-circle-fine    " ></i></a>';
+                //如果当前结点是二级节点, 显示两个按钮(编辑,删除)
+            } else if (treeNode.level == 2) {
+                s += '<a class="ayui-btn layui-btn-xs" ' +
+                    'style="margin-left:3px;padding-top:0px;"  ' +
+                    'onclick="editN(' + treeNode.id + ')" ' +
+                    'href="#">&nbsp;<i class="layui-icon layui-icon-edit    " ></i></a>';
+                s += '<a class="ayui-btn layui-btn-xs" ' +
+                    'style="margin-left:3px;padding-top:0px;" ' +
+                    'onclick="delN(' + treeNode.id + ')" ' +
+                    'href="#">&nbsp;<i class="layui-icon layui-icon-delete    " ></i></a>';
+            }
+            //拼接最后的字符串
+            s += '</span>';
+            aObj.after(s);
+        }
+
+        // 鼠标移出.
+        function removeHoverDom(treeId, treeNode) {
+            $("#btnGroup" + treeNode.tId).remove();
+        }
+
+        // 节点的点击事件
+        function onClick(event, treeId, treeNode) {
+            // 阻止默认事件. 此处效果是点击节点不会跳转
+            event.preventDefault();
+
+            // 点击节点开关节点
+            // let zTree = $.fn.zTree.getZTreeObj("permissionTree");
+            // zTree.expandNode(treeNode);
+
+            addDiyDom(treeId, treeNode);
+        }
+
+        // 设置myiframe的高度
+        parent.alertsize(document.body.scrollHeight);
+
+    });
+
+    //增加节点
+    function addN(parentNodeId) {
+        // window.location.href = "/permission/add/" + parentNodeId;
+        layer.open({
+            type: 1,//弹出内容类型
+            title: "添加新权限",//标题
+            btn: ['添加', '取消'],
+            area: ['65%', '80%'], //大小
+            skin: ['layui-layer-lan'],//皮肤
+            anim: 5,//动画类型
+            maxmin: false,
+            offset: '20px',
+            shade: [0.1, '#fff'],
+            //根据layui要求,此处能传纯字符串或DOM对象
+            // content: $("#form01").html(),
+            content: $("#form01"),
+            moveOut: false,//是否允许拖动到窗口外
+            // 弹出成功后的回调
+            // 参数: 当前层DOM, 当前层索引
+            success: function (obj, index) {
+                // 表单赋初始值
+                form.val("form_example", {
+                    // "name": "贤心"
+                });
+            },
+            //点击按钮1
+            yes: function () {
+
+                //关闭弹窗
+                layer.closeAll();
+                // let name = $("#name").val();
+                // let url = $("#url").val();
+                // let orderNum = $("#orderNum").val();
+                // let icon = $("#icon").val();
+                // let type = $("#type").val();
+                // let remark = $("#remark").val();
+                // let parentId = parentNodeId;
+
+                let loadingIndex = null;
+                $.ajax({
+                    type: "POST"
+                    , url: "[[@{/permission/insertPermission}]]"
+                    , data: {
+                        "name": $("#name").val(),
+                        "url": $("#url").val(),
+                        "orderNum": $("#orderNum").val(),
+                        "icon": 'layui-icon ' + $("#icon").val(),
+                        "type": $("#type").val(),
+                        "remark": $("#remark").val(),
+                        "parentId": parentNodeId
+                    }
+                    // 发送数据之前要执行的逻辑
+                    , beforeSend: function () {
+                        //显示正在处理中的动画
+                        loadingIndex = layer.msg('处理中', {
+                            icon: 16,
+                            shade: 0,
+                            offset: '230px'
+                        });
+                    }
+                    //接收到服务器的响应之后要执行的逻辑, 参数就是接收到的服务器的Http响应
+                    , success: function (result) {
+                        //关闭正在处理中的动画
+                        layer.close(loadingIndex);
+                        if (result.code == 200) {
+                            // 添加成功
+                            layer.msg("添加成功", {time: 1600, offset: '230px', icon: 6});
+                        } else {
+                            //添加失败
+                            layer.msg("添加失败", {time: 1600, offset: '230px', icon: 5, anim: 6});
+                        }
+                    }
+                });
+
+
+            },
+            //点击按钮2
+            btn2: function () {
+                //关闭
+                layer.close();
+            }
+        });
+        //渲染表单,否则选择类表单将不能用
+        form.render();
+    }
+
+    //修改结点
+    function editN(id) {
+        $.ajax({
+            type: "GET"
+            , url: "[[@{/permission/find}]]"
+            , data: {"id": id}
+            , success: function (result) {
+                if (result.code == 200) {
+                    permissionData = result.data;
+                }
+                // window.location.href = "/permission/edit/" + id;
+                layer.open({
+                    type: 1,//弹出内容类型
+                    title: "修改权限信息",//标题
+                    btn: ['修改', '取消'],
+                    area: ['65%', '80%'], //大小
+                    skin: ['layui-layer-lan'],//皮肤
+                    anim: 5,//动画类型
+                    maxmin: false,
+                    offset: '20px',
+                    shade: [0.1, '#fff'],
+                    //根据layui要求,此处能传纯字符串或DOM对象
+                    // content: $("#form01").html(),
+                    content: $("#form01"),
+                    moveOut: false,//是否允许拖动到窗口外
+                    // 弹出成功后的回调
+                    // 参数: 当前层DOM, 当前层索引
+                    success: function (obj, index) {
+                        // 表单赋初始值
+                        form.val("form_example", {
+                            "name": permissionData.name,
+                            "url": permissionData.url,
+                            "orderNum": permissionData.orderNum,
+                            "icon": permissionData.icon,
+                            "type": permissionData.type,
+                            "remark": permissionData.remark
+                        });
+                        //渲染表单,否则选择类表单将不能用
+                        form.render();
+                    },
+                    //点击按钮1
+                    yes: function () {
+                        //关闭弹窗
+                        layer.closeAll();
+                        let loadingIndex = null;
+                        $.ajax({
+                            type: "POST"
+                            , url: "[[@{/permission/edit}]]"
+                            , data: {
+                                "name": $("#name").val(),
+                                "url": $("#url").val(),
+                                "orderNum": $("#orderNum").val(),
+                                "icon": $("#icon").val(),
+                                "type": $("#type").val(),
+                                "remark": $("#remark").val(),
+                                "id": id
+                            }
+                            // 发送数据之前要执行的逻辑
+                            , beforeSend: function () {
+                                //显示正在处理中的动画
+                                loadingIndex = layer.msg('处理中', {
+                                    icon: 16,
+                                    shade: 0,
+                                    offset: '230px'
+                                });
+                            }
+                            //接收到服务器的响应之后要执行的逻辑, 参数就是接收到的服务器的Http响应
+                            , success: function (result) {
+                                //关闭正在处理中的动画
+                                layer.close(loadingIndex);
+                                if (result.code == 200) {
+                                    // 添加成功
+                                    layer.msg("修改成功", {time: 1600, offset: '230px', icon: 6});
+                                } else {
+                                    //添加失败
+                                    layer.msg("修改失败", {time: 1600, offset: '230px', icon: 5, anim: 6});
+                                }
+                            }
+                        });
+
+                    },
+                    //点击按钮2
+                    btn2: function () {
+                        //关闭
+                        layer.close();
+                    }
+                });
+
+            }
+        });
+        //渲染表单,否则选择类表单将不能用
+        form.render();
+    }
+
+    // 删除节点
+    function delN(id) {
+        layer.confirm('确定删除吗',
+            {shade: 0, offset: '200px'},
+            function (index) {
+                $.ajax({
+                    type: "POST"
+                    , url: "[[@{/permission/delete}]]"
+                    , data: {"permissionId": id}
+                    //接收到服务器的响应之后要执行的逻辑, 参数就是接收到的服务器的Http响应
+                    , success: function (result) {
+                        if (result.code == 200) {
+                            //请求成功,重载树
+                            let treeObj = $.fn.zTree.getZTreeObj("permissionTree");
+                            treeObj.reAsyncChildNodes(null, "refresh");
+                            //关闭当前窗口
+                            layer.close(index);
+                            layer.msg("删除成功", {time: 1600, offset: '230px', icon: 6});
+                        } else {
+                            //关闭当前窗口
+                            layer.close(index);
+                            layer.msg("删除失败", {time: 1600, offset: '230px', icon: 5, anim: 6});
+                        }
+                    }
+                });
+
+            });
+    }
+
+</script>
+
+
+</body>
+</html>
+

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <script th:src="@{/jquery/jquery.js}"></script>
+    <script th:src="@{/layui/layui.js}"></script>
+    <title>用户维护</title>
+</head>
+<body class="layui-layout-body">
+<!--添加表单-->
+<div id="form01" class="layui-row" style="display: none">
+    <div class="layui-col-md11" id="form001">
+        <form class="layui-form" id="form0001" lay-filter="major_form">
+            <div class="layui-form-item">
+                <!--表单不顶边-->
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <!--lay-verify="required" : 必须填写此项-->
+                    <input type="text" name="username" id="username" required lay-verify="required" placeholder="请输入用户名"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号</label>
+                <div class="layui-input-inline">
+                    <!--lay-verify="required" : 必须填写此项-->
+                    <input type="text" name="loginAccount" id="loginAccount" required lay-verify="required"
+                           placeholder="请输入账号"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password0" id="password0" required lay-verify="required"
+                           placeholder="请在此输入密码" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">长度不超16个字符.</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" id="password" required lay-verify="required"
+                           placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" id="email" required lay-verify="email" placeholder="请输入邮箱"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注信息</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" id="remark" placeholder="请输入备注信息" class="layui-textarea"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 内容主体区域 -->
+<div class="layui-layout layui-layout-admin">
+    <!--数据表格-->
+    <table id="table01" lay-filter='table001'></table>
+    <!--表格头部工具栏-->
+    <script type="text/html" id="toolbar01">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn layui-btn-sm layui-btn-warm" lay-event="add">添加</button>
+            <button class="layui-btn layui-btn layui-btn-sm layui-btn-danger" lay-event="del">批量删除</button>
+        </div>
+    </script>
+    <!--表格行内操作按钮-->
+    <script type="text/html" id="bar01">
+        <a class="layui-btn layui-btn-xs layui-btn-radius layui-bg-blue" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-xs layui-btn-radius layui-bg-green" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs layui-btn-radius layui-bg-orange" lay-event="autho">授权</a>
+        <a class="layui-btn layui-btn-xs layui-btn-radius layui-bg-red" lay-event="del">删除</a>
+    </script>
+</div>
+<!-- 内容主体区域结束 -->
+
+<script>
+    layui.use(['layer', 'table'], function () {
+        let $ = layui.$
+            , table = layui.table // 引入数据表格模块
+            , layer = layui.layer; // 引入弹框功能
+
+        //一个数据表格的实例
+        table.render({
+            elem: '#table01'//指定原始表格元素选择器
+            , height: 600//容器高度
+            // , width: 1000
+            , title: '用户数据表'
+            , url: '/user/userPaging' //数据接口
+            , page: true //开启分页
+            , toolbar: '#toolbar01'//开启表格头部工具栏区域
+            , totalRow: false //开启合计行区域
+            , skin: 'line' //行边框风格
+            , even: true //开启隔行背景
+            , cols: [
+                [//表头
+                    {type: 'checkbox'}
+                    , {field: 'id', title: 'ID', sort: true}
+                    , {field: 'username', title: '用户名'}
+                    , {field: 'loginAccount', title: '账号', sort: true}
+                    , {field: 'email', title: '邮箱'}
+                    , {field: 'status', title: '状态', templet: '#status'}
+                    , {field: 'remark', title: '备注', hide: true}
+                    , {fixed: '', title: '操作', toolbar: '#bar01'}
+                ]
+            ]
+            , unresize: true//列宽可拖拽
+        });
+
+        // 设置myiframe的高度
+        parent.alertsize(document.body.scrollHeight);
+
+        //表格头部按钮的事件监听
+        table.on('toolbar(table001)', function (obj) {
+            let checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    addUser();
+                    // layer.msg('添加');
+                    break;
+                case 'del':
+                    layer.msg('删除');
+                    break;
+            }
+        });
+
+        // 表格每行按钮的事件监听
+        table.on('tool(table001)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行的数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            if (layEvent === 'detail') { //点击查看按钮
+                layer.msg('你点击了查看按钮');
+                console.log(data); //查看当前行的数据
+                // console.log(tr); //查看当前行的DOm对象
+                // console.log(obj); //查看当前行
+            } else if (layEvent === 'autho') {
+                // layer.msg('你点击了[授权]按钮');
+                // window.location.href = "/user/assign";
+
+                layer.open({
+                    type: 2,//弹出内容类型
+                    title: "用户角色分配",//标题
+                    area: ['900px', '600px'], //大小
+                    skin: ['layui-layer-lan'],//皮肤
+                    anim: 5,//动画类型
+                    maxmin: false, // 不允许最大化和最小化
+                    resize: false, // 是否允许窗口拉伸
+                    scrollbar: true,  // 是否允许浏览器出现滚动条
+                    shade: 0,// 取消遮罩
+                    //根据layui要求,此处能传纯字符串或DOM对象
+                    // content: $("#form01").html(),
+                    content: '/user/assign/' + data.id,
+                    moveOut: false //是否允许拖动到窗口外
+                });
+
+            } else if (layEvent === 'del') { //删除
+                layer.confirm('真的删除行么', function (index) {
+
+                    //数据表格重载
+                    table.reload('table01', {
+                        url: ''
+                        , where: {} //设定异步数据接口的额外参数
+                        //,height: 300
+                    });
+
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+
+                    // console.log(index); // 查看当前数据的索引
+                    //向服务端发送删除指令
+                });
+            } else if (layEvent === 'edit') { //编辑
+                //do something
+                layer.msg('你点击了编辑按钮');
+                //同步更新缓存对应的值
+                obj.update({
+                    username: '123'
+                    , title: 'xxx'
+                });
+            }
+        });
+
+        // 添加用户
+        function addUser() {
+            layer.open({
+                type: 1,//弹出内容类型
+                title: "添加用户 ",//标题
+                btn: ['添加', '重置', '取消'],
+                area: ['65%', '80%'], //大小
+                skin: ['layui-layer-lan'],//皮肤
+                anim: 5,//动画类型
+                maxmin: true,
+                shade: 0,
+                //根据layui要求,此处能传纯字符串或DOM对象
+                content: $("#form01"),
+                moveOut: false,//是否允许拖动到窗口外
+                //点击按钮1
+                yes: function () {
+                    let loadingIndex = null;
+                    //获取参数
+                    let jsonData = {
+                        "username": $("#username").val(),
+                        "loginAccount": $("#loginAccount").val(),
+                        "password": $("#password").val(),
+                        "email": $("#email").val(),
+                        "remark": $("#remark").val()
+                    };
+                    //添加学生
+                    $.ajax({
+                        type: "POST",
+                        url: '/user/add',
+                        data: jsonData,
+                        beforeSend: function () {
+                            //显示正在处理中的动画
+                            loadingIndex = layer.msg('处理中', {
+                                icon: 16,
+                                shade: 0
+                            });
+                        },
+                        //得到响应数据后的回调
+                        success: function (result) {
+                            //关闭正在处理中的动画
+                            layer.close(loadingIndex);
+                            if (result.code == 200) {
+                                //数据表格重载
+                                table.reload('table01', {
+                                    url: '/user/userPaging'
+                                });
+
+                                //关闭弹窗
+                                layer.closeAll();
+                                layer.msg('添加成功', {
+                                    //提示图标
+                                    icon: 1
+                                    //动画
+                                    , anim: 5
+                                    //关闭时间
+                                    , time: 1000
+                                    //提示框消失后的回调
+                                    , end: function () {
+                                    }
+                                });
+                                //添加失败
+                            } else {
+                                layer.msg('添加失败', {
+                                    //提示图标
+                                    icon: 5
+                                    //动画
+                                    , anim: 6
+                                    //关闭时间
+                                    , time: 1000
+                                    //提示框消失后的回调
+                                    , end: function () {
+                                    }
+                                });
+                            }
+                        }
+                    });
+                },
+                //点击按钮2
+                btn2: function () {
+                    //重置表单
+                    document.getElementById("form0001").reset();
+                    //点击按钮后是否关闭该弹窗
+                    return false;
+                },
+                //点击按钮3
+                btn3: function () {
+                    //关闭条件查询弹窗
+                    layer.closeAll();
+                }
+            });
+        }
+
+    });
+
+
+
+</script>
+<!--数据表格模板-->
+<script type="text/html" id="status">
+    {{#  if(d.status==1){ }}
+    <span style="color: green;">正常</span>
+    {{#  }else{ }}
+    <span style="color: red;">禁用</span>
+    {{# } }}
+</script>
+</body>
+</html>
+

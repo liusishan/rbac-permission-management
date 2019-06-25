@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.king.mapper.UserMapper">
+
+    <resultMap id="userResultMap" type="cn.king.entities.User">
+        <id property="id" column="id"/>
+        <result property="loginAccount" column="login_account"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastUpdateBy" column="last_update_by"/>
+        <result property="lastUpdateTime" column="last_update_time"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="userFieldsInSql">
+        sys_user.username,
+        sys_user.login_account,
+        sys_user.`password`,
+        sys_user.email,
+        sys_user.salt,
+        sys_user.status,
+    </sql>
+
+    <sql id="selectUserSql">
+        SELECT
+        sys_user.id,
+        <include refid="userFieldsInSql"/>
+        <include refid="cn.king.mapper.BaseModel.baseFieldsInSql"/>
+        FROM
+    </sql>
+
+    <insert id="insertUser">
+        INSERT INTO sys_user (
+        <include refid="userFieldsInSql"/>
+        <include refid="cn.king.mapper.BaseModel.baseFieldsInSql"/>
+        )
+        VALUES(
+        #{username},
+        #{loginAccount},
+        #{password},
+        #{email},
+        #{salt},
+        #{status},
+        <include refid="cn.king.mapper.BaseModel.baseFieldsInModel"/>
+        )
+    </insert>
+
+    <update id="updateUser">
+        UPDATE sys_user
+        <set>
+            <if test="user.username != null">
+                sys_user.username = #{username}
+            </if>
+            <if test="user.loginAccount != null">
+                ,sys_user.login_account = #{loginAccount}
+            </if>
+            <if test="user.email != null">
+                ,sys_user.email = #{email}
+            </if>
+            <if test="user.delFlag != null">
+                ,sys_user.del_flag = #{delFlag}
+            </if>
+            <if test="user.remark != null">
+                ,sys_user.remark = #{remark}
+            </if>
+            <if test="user.status != null">
+                ,sys_user.status = #{status}
+            </if>
+        </set>
+        where
+        sys_user.id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteUserById">
+        DELETE FROM sys_user WHERE sys_user.id = #{uid}
+    </delete>
+
+    <delete id="deleteUsersByIds">
+        DELETE FROM sys_user WHERE sys_user.id IN
+        <foreach collection="userIds" item="userId" open="(" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <select id="findUserById" resultMap="userResultMap">
+        <include refid="selectUserSql"/>
+        sys_user
+        WHERE sys_user.id = #{uid}
+    </select>
+
+    <select id="findAll" resultMap="userResultMap">
+        <include refid="selectUserSql"/>
+        sys_user
+    </select>
+
+    <select id="findUserByLoginInfo" resultMap="userResultMap">
+        <include refid="selectUserSql"/>
+        sys_user
+        WHERE
+        sys_user.login_account = #{loginAccount}
+        AND
+        sys_user.password = #{password}
+    </select>
+
+    <select id="findUsersByRoleId" resultMap="userResultMap">
+        <include refid="selectUserSql"/>
+        sys_user, sys_role, sys_user_role
+        WHERE 1=1 AND
+        sys_user_role.user_id = sys_user.id AND
+        sys_user_role.role_id = sys_role.id AND
+        sys_role.id = #{roleId}
+    </select>
+
+    <select id="userPaging" resultMap="userResultMap">
+        <include refid="selectUserSql"/>
+        sys_user
+        <where>
+            1= 1
+            <if test="user.username != null">
+                AND sys_user.username = #{user.username}
+            </if>
+            <if test="user.loginAccount != null">
+                AND sys_user.login_account = #{user.loginAccount}
+            </if>
+            <if test="user.email != null">
+                AND sys_user.email = #{user.email}
+            </if>
+            <if test="user.status != null">
+                AND sys_user.status = #{user.status}
+            </if>
+            <if test="user.delFlag != null">
+                AND sys_user.del_flag = #{user.delFlag}
+            </if>
+            LIMIT
+            #{pageNumber},#{limit}
+        </where>
+
+    </select>
+
+    <select id="findUserCount" resultType="java.lang.Long">
+        SELECT count(*) FROM sys_user
+        <where>
+            1= 1
+            <if test="user.username != null">
+                AND sys_user.username like "%"#{user.username}"%"
+            </if>
+            <if test="user.loginAccount != null">
+                AND sys_user.login_account like "%"#{user.loginAccount}"%"
+            </if>
+            <if test="user.email != null">
+                AND sys_user.email like "%"#{user.email}"%"
+            </if>
+            <if test="user.status != null">
+                AND sys_user.status = #{user.status}
+            </if>
+            <if test="user.delFlag != null">
+                AND sys_user.del_flag = #{user.delFlag}
+            </if>
+        </where>
+    </select>
+
+    <select id="findUserByAccount" resultMap="userResultMap">
+        <include refid="selectUserSql"/>
+        sys_user WHERE sys_user.login_account = #{account}
+    </select>
+
+</mapper>

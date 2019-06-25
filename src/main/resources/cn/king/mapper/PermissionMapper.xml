@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.king.mapper.PermissionMapper">
+
+    <resultMap id="permissionResultMap" type="cn.king.entities.Permission">
+        <id property="id" column="id"/>
+        <result property="parentId" column="pid"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastUpdateBy" column="last_update_by"/>
+        <result property="lastUpdateTime" column="last_update_time"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="permissionFieldsInSql">
+        sys_permission.`name`,
+        sys_permission.`pid`,
+        sys_permission.`url`,
+        sys_permission.`icon`,
+        sys_permission.`type`,
+        sys_permission.`order_num`,
+    </sql>
+
+    <sql id="selectPermissionSql">
+        SELECT
+        sys_permission.id,
+        <include refid="permissionFieldsInSql"/>
+        <include refid="cn.king.mapper.BaseModel.baseFieldsInSql"/>
+        FROM
+    </sql>
+
+    <update id="updatePermission">
+        UPDATE sys_permission
+        <set>
+            <if test="name != null">
+                sys_permission.`name` = #{name}
+            </if>
+            <if test="url != null">
+                ,sys_permission.url = #{url}
+            </if>
+            <if test="icon != null">
+                ,sys_permission.icon = #{icon}
+            </if>
+            <if test="type != null">
+                ,sys_permission.type = #{type}
+            </if>
+            <if test="orderNum != null">
+                ,sys_permission.order_num = #{orderNum}
+            </if>
+            <if test="lastUpdateBy != null">
+                ,sys_permission.last_update_by = #{lastUpdateBy}
+            </if>
+            <if test="lastUpdateTime != null">
+                ,sys_permission.last_update_time = #{lastUpdateTime}
+            </if>
+            <if test="delFlag != null">
+                ,sys_permission.del_flag = #{delFlag}
+            </if>
+            <if test="remark != null">
+                ,sys_permission.remark = #{remark}
+            </if>
+        </set>
+        where sys_permission.id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deletePermissionById">
+        DELETE FROM sys_permission WHERE sys_permission.id = #{permissionId}
+    </delete>
+
+    <delete id="deletePermissionsByIds">
+        DELETE FROM sys_permission WHERE sys_permission.id in
+        <foreach collection="permissionIds" item="permissionId" open="(" close=")" separator=",">
+            #{permissionId}
+        </foreach>
+    </delete>
+
+    <insert id="insertPermission">
+        INSERT INTO sys_permission (
+        <include refid="permissionFieldsInSql"/>
+        <include refid="cn.king.mapper.BaseModel.baseFieldsInSql"/>
+        )
+        VALUES(
+        #{name},
+        #{parentId},
+        #{url},
+        #{icon},
+        #{type},
+        #{orderNum},
+        <include refid="cn.king.mapper.BaseModel.baseFieldsInModel"/>
+        )
+    </insert>
+
+    <select id="findPermissionsByRoleId" resultMap="permissionResultMap">
+        <include refid="selectPermissionSql"/>
+        sys_role, sys_permission, sys_role_permission
+        WHERE 1=1 AND
+        sys_role_permission.role_id = sys_role.id AND
+        sys_role_permission.permission_id = sys_permission.id AND
+        sys_role.id = #{roleId}
+    </select>
+
+    <select id="findAllPermissions" resultMap="permissionResultMap">
+        <include refid="selectPermissionSql"/>
+        sys_permission
+    </select>
+
+    <select id="findPermissionById" resultMap="permissionResultMap">
+        <include refid="selectPermissionSql"/>
+        sys_permission
+        where sys_permission.id = #{id}
+    </select>
+
+    <select id="findPermissionsByUserId" resultMap="permissionResultMap">
+        <include refid="selectPermissionSql"/>
+        sys_permission
+        WHERE
+        sys_permission.id
+        IN ( SELECT sys_role_permission.permission_id FROM sys_role_permission WHERE sys_role_permission.role_id
+        IN ( SELECT sys_user_role.role_id FROM sys_user_role WHERE sys_user_role.user_id = #{userId} ) )
+    </select>
+
+    <select id="findRootPermission" resultMap="permissionResultMap">
+        <include refid="selectPermissionSql"/>
+        sys_permission WHERE sys_permission.pid = 0
+    </select>
+
+    <select id="findChildPermissions" resultMap="permissionResultMap">
+        <include refid="selectPermissionSql"/>
+        sys_permission WHERE sys_permission.pid = #{pid}
+    </select>
+
+    <select id="findAllPermissionsIds" resultType="java.lang.Integer">
+        SELECT
+        sys_permission.id
+        FROM
+        sys_permission
+    </select>
+
+    <select id="findPermissionsIdsByRoleId" resultType="java.lang.Integer">
+        SELECT
+        sys_permission.id
+        FROM
+        sys_role, sys_permission, sys_role_permission
+        WHERE 1=1 AND
+        sys_role_permission.role_id = sys_role.id AND
+        sys_role_permission.permission_id = sys_permission.id AND
+        sys_role.id = #{roleId}
+    </select>
+
+</mapper>
+
+
