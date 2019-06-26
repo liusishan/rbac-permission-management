@@ -22,13 +22,6 @@
 	   │  └─部门管理
 	 
 
-###  部署环境
-
- 1. JDK11
- 2. MySql8
- 3. Maven3.5.x
- 4. Intellij IDEA 2019.1.2
-
 ## 技术选型
 - SpringBoot 2.x
 - MyBatis 3.x
