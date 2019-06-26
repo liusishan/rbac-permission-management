@@ -1,5 +1,5 @@
 # 权限管理. 17级软件技术五班SSM作业
-王经励笨蛋
+
 ## 技术选型
 - SpringBoot 2.x
 - MyBatis 3.x
