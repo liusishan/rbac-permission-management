@@ -1,7 +1,5 @@
-# 权限管理. 17级软件技术五班SSM作业
-
-
-## rbac-permission-management 
+# rbac-permission-management 
+### 权限管理. 17级软件技术
 ![screenshot](img/tittle.png)
 
 ### 本地部署账号密码
