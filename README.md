@@ -1,4 +1,4 @@
-# rbac-permission-management 权限管理. 17级软件技术
+# rbac-permission-management 
 ![screenshot](img/tittle.png)
 ### 本地部署账号密码
 
