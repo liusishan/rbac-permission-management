@@ -25,3 +25,95 @@
 - 王成君: 权限管理, 角色管理模块的开发, 数据库的设计;
 - 李文仙, 黄玮琪: 负责所有前端代码的编写.
 - 林广博, 王经励: 部门管理模块开发, 接口测试
+
+
+---
+
+## rbac-permission-management 
+
+<table >
+  <tr>
+    <td bgcolor=#003e3e><font color=#ffffff size=3>SpringBoot</font></td>
+      <td bgcolor=#0068cc><font color=#ffffff size=3>2.1.5.RELEASE Mysql8</font></td>
+       <td bgcolor=#003e3e><font color=#ffffff size=3>jQuery</font></td>
+      <td bgcolor=#8cea00><font color=#ffffff size=3>v3.4.1</font></td>
+       <td bgcolor=#003e3e><font color=#ffffff size=3>layui</font></td>
+      <td bgcolor=#d9b300><font color=#ffffff size=3>v2.5.4</font></td>
+       <td bgcolor=#003e3e><font color=#ffffff size=3>Maven</font></td>
+      <td bgcolor=#ff5809><font color=#ffffff size=3>3.5.x </font></td>
+       <td bgcolor=#003e3e><font color=#ffffff size=3>intellij IDEA </font></td>
+      <td bgcolor=#82d900><font color=#ffffff size=3>2019.1.2  </font></td>
+  </tr>
+</table>
+
+### 本地部署账号密码
+
+|     账号        |         密码                  |权限                      |
+|----------------|-------------------------------|-----------------------------|
+|admin           |               admin           |超级管理员拥有所有增删改查的权限        
+
+### 系统模块
+系统功能模块组成如下所示
+
+  
+
+	   ├─系统管理
+	   │  ├─用户管理
+	   │  ├─角色管理
+	   │  ├─菜单管理
+	   │  └─部门管理
+	   ├─系统监控
+	   │  ├─在线用户
+	   │  ├─系统日志
+	   │  ├─登录日志
+	   │  ├─Redis监控
+	   │  ├─Redis终端
+	   │  ├─请求追踪
+	   │  ├─系统信息
+	   │  │  ├─JVM信息
+	   │  │  ├─TOMCAT信息
+	   │  │  └─服务器信息
+	   ├─任务调度
+	   │  ├─定时任务
+	   │  └─调度日志
+	   ├─代码生成
+	   │  ├─生成配置
+	   │  ├─代码生成
+	   └─其他模块
+	      ├─FEBS组件
+	      │  ├─表单组件
+	      │  ├─表单组合
+	      │  ├─FEBS工具
+	      │  ├─系统图标
+	      │  └─其他组件
+	      ├─APEX图表
+	      ├─高德地图
+	      └─导入导出
+
+###  部署环境
+
+ 1. JDK11
+ 2. MySql8
+ 3. Maven3.5.x
+ 4. Intellij IDEA 2019.1.2
+
+
+### 系统截图
+![image](https://note.youdao.com/favicon.ico)
+
+
+### 小组成员以及贡献
+
+小组成员:  
+王成君  
+李文仙  
+王经励  
+黄玮琪  
+林广博  
+  
+贡献:  
+  
+李文仙, 黄玮琪: 负责所有前端代码的编写.  
+王成君: 权限管理, 角色管理模块的开发, 数据库的设计;  
+林广博, 王经励: 部门管理模块开发, 接口测试
+
