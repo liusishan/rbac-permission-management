@@ -32,23 +32,6 @@
 ## rbac-permission-management 
 ![screenshot](img/tittle.png)
 
-
-
-<table style="background:#003e3e;">
-  <tr style="background:#003e3e;">
-    <td style="background:#003e3e;"><font color=#ffffff size=3>SpringBoot</font></td>
-      <td bgcolor=#0068cc><font color=#ffffff size=3>2.1.5.RELEASE Mysql8</font></td>
-       <td bgcolor=#003e3e><font color=#ffffff size=3>jQuery</font></td>
-      <td bgcolor=#8cea00><font color=#ffffff size=3>v3.4.1</font></td>
-       <td bgcolor=#003e3e><font color=#ffffff size=3>layui</font></td>
-      <td bgcolor=#d9b300><font color=#ffffff size=3>v2.5.4</font></td>
-       <td bgcolor=#003e3e><font color=#ffffff size=3>Maven</font></td>
-      <td bgcolor=#ff5809><font color=#ffffff size=3>3.5.x </font></td>
-       <td bgcolor=#003e3e><font color=#ffffff size=3>intellij IDEA </font></td>
-      <td bgcolor=#82d900><font color=#ffffff size=3>2019.1.2  </font></td>
-  </tr>
-</table>
-
 ### 本地部署账号密码
 
 |     账号        |         密码                  |权限                      |
@@ -75,3 +58,11 @@
  4. Intellij IDEA 2019.1.2
 
 ### 系统截图
+
+![screenshot](img/1.png)
+![screenshot](img/2.png)
+![screenshot](img/3.png)
+![screenshot](img/4.png)
+![screenshot](img/5.png)
+
+
