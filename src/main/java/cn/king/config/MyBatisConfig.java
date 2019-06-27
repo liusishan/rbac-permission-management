@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 15:20
  * @title:
  * @description: MyBatis的配置文件. 代替xml版本的mybatis的核心配置文件.
