@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:48
  * @title:
  * @description:
@@ -25,7 +25,7 @@ public class PermissionController {
     private PermissionService permissionService;
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/24 8:47
      * @param: [permission]
      * @return: cn.king.common.http.HttpResult
@@ -38,7 +38,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/23 17:26
      * @param: [permission]
      * @return: cn.king.common.http.HttpResult
@@ -56,7 +56,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/22 15:10
      * @param: []
      * @return: cn.king.entities.Permission
@@ -69,7 +69,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 15:48
      * @param: [roleid]
      * @return: cn.king.entities.Permission
@@ -85,7 +85,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/23 15:05
      * @param: [permissionId]
      * @return: cn.king.common.http.HttpResult
@@ -98,7 +98,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/23 14:48
      * @param: [id]
      * @return: java.lang.String
@@ -111,7 +111,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/23 14:44
      * @param: [parentNodeId]
      * @return: java.lang.String
@@ -124,7 +124,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/23 20:21
      * @param: [id]
      * @return: cn.king.common.http.HttpResult
