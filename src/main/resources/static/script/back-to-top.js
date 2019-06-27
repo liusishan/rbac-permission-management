@@ -6,7 +6,7 @@
 
 
 var scrolltotop={
-	//startline: Integer. Number of pixels from top of doc scrollbar is scrolled before showing control
+	
 	//scrollto: Keyword (Integer, or "Scroll_to_Element_ID"). How far to scroll document up when control is clicked on (0=top).
 	setting: {startline:100, scrollto: 0, scrollduration:1000, fadeduration:[500, 100]},
 	controlHTML: '', //'<img src="assets/img/up.png" style="width:51px; height:42px" />' //HTML for control, which is auto wrapped in DIV w/ ID="topcontrol"
@@ -69,8 +69,5 @@ var scrolltotop={
 			$(window).bind('scroll resize', function(e){
 				mainobj.togglecontrol()
 			})
-		})
-	}
-}
-
-scrolltotop.init()
+		})}
+}scrolltotop.init()
