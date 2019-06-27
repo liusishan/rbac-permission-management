@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:40
  * @title:
  * @description:
@@ -70,7 +70,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 17:13
      * @param: [userId]
      * @return: java.util.List<cn.king.entities.Permission>
@@ -82,7 +82,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 14:59
      * @param: []
      * @return: java.lang.Object
@@ -98,7 +98,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 15:21
      * @param: [roleid]
      * @return: java.lang.Object
@@ -128,7 +128,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 17:33
      * @param: [userId, session 为了在权限url前拼接应用名, 因此需要session]
      * @return: java.util.Set<java.lang.String>
@@ -150,7 +150,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 17:03
      * @param: [user]
      * @return: cn.king.entities.Permission
@@ -166,7 +166,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/23 14:55
      * @param: [permissionId]
      * @return: java.lang.Integer
@@ -186,7 +186,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/23 17:24
      * @param: [permission]
      * @return: java.lang.Integer
@@ -207,7 +207,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/24 8:58
      * @param: [permission]
      * @return: java.lang.Integer
@@ -226,7 +226,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/24 9:23
      * @param: []
      * @return: java.util.List<cn.king.entities.Permission>
@@ -238,7 +238,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/22 14:46
      * @param: [permissionList 查询出的前权限集合]
      * @return: cn.king.entities.Permission
@@ -272,7 +272,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 17:08
      * @param: [parent]
      * @return: void
