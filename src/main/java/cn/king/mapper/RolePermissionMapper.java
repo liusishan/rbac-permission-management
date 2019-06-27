@@ -3,7 +3,7 @@ package cn.king.mapper;
 import java.util.Map;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:44
  * @title:
  * @description:
@@ -38,7 +38,7 @@ public interface RolePermissionMapper {
     Integer deletePermissionRoles(Map<String, Object> map);
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/22 14:18
      * @param: [roleId]
      * @return: java.lang.Integer
@@ -47,7 +47,7 @@ public interface RolePermissionMapper {
     Integer deleteRoleAllPermissions(Integer roleId);
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcjl@king.cn
      * @createTime: 2019/6/23 15:00
      * @param: [PermissionId]
      * @return: java.lang.Integer
