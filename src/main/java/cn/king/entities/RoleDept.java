@@ -1,5 +1,5 @@
 package cn.king.entities;
-
+       
 import cn.king.common.model.BaseModel;
 import lombok.*;
 
