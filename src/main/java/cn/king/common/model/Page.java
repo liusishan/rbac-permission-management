@@ -1,5 +1,5 @@
 package cn.king.common.model;
-
+                                                                                   
 import lombok.Data;
 import java.util.List;
 
