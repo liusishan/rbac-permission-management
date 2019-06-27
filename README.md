@@ -1,5 +1,5 @@
 # Rbac-Permission-Management 
-（希望老师喜欢我们的文档  给我们高分  老师万岁 老师最帅 老师最棒哒  耶耶耶耶耶！）
+（PS：希望老师喜欢我们的文档  给我们高分  老师万岁 老师最帅 老师最棒哒  耶耶耶耶耶！）
 ![screenshot](img/tittle.png)
 ### 本地部署账号密码
 
