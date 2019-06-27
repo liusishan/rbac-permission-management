@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:41
  * @title:
  * @description:
@@ -57,7 +57,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 12:39
      * @param: [role, pageNumber, limit]
      * @return: java.util.Map<java.lang.String, java.lang.Object>
@@ -76,7 +76,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/19 17:22
      * @param: [userId]
      * @return: java.util.List<cn.king.entities.Role>
@@ -88,7 +88,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/19 17:27
      * @param: [userId]
      * @return: java.util.Map<java.lang.String, java.lang.Object>
