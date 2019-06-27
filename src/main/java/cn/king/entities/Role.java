@@ -4,7 +4,7 @@ import cn.king.common.model.BaseModel;
 import lombok.*;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:23
  * @title:
  * @description:
