@@ -35,20 +35,13 @@ public interface RolePermissionMapper {
     Integer deletePermissionRoles(Map<String, Object> map);
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/22 14:18
-     * @param: [roleId]
-     * @return: java.lang.Integer
-     * @description: 删除当前角色所有的权限
+     删除当前角色所有的权限
      */
     Integer deleteRoleAllPermissions(Integer roleId);
 
     /**
-     * @author: wcjl@king.cn
-     * @createTime: 2019/6/23 15:00
-     * @param: [PermissionId]
-     * @return: java.lang.Integer
-     * @description: 删除角色权限关系表中, 所有权限是PermissionId的记录
+
+    删除角色权限关系表中, 所有权限是PermissionId的记录
      */
     Integer deleteRelationshipByPermissionId(Integer permissionId);
 }

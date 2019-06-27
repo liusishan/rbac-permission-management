@@ -69,7 +69,7 @@
     <delete id="deletePermissionById">
         DELETE FROM sys_permission WHERE sys_permission.id = #{permissionId}
     </delete>
-
+    <!--删除多个权限-->
     <delete id="deletePermissionsByIds">
         DELETE FROM sys_permission WHERE sys_permission.id in
         <foreach collection="permissionIds" item="permissionId" open="(" close=")" separator=",">
@@ -92,7 +92,7 @@
         <include refid="cn.king.mapper.BaseModel.baseFieldsInModel"/>
         )
     </insert>
-
+     <!--查询某角色的所有权限-->
     <select id="findPermissionsByRoleId" resultMap="permissionResultMap">
         <include refid="selectPermissionSql"/>
         sys_role, sys_permission, sys_role_permission
@@ -121,24 +121,24 @@
         IN ( SELECT sys_role_permission.permission_id FROM sys_role_permission WHERE sys_role_permission.role_id
         IN ( SELECT sys_user_role.role_id FROM sys_user_role WHERE sys_user_role.user_id = #{userId} ) )
     </select>
-
+    <!--查询根节点-->
     <select id="findRootPermission" resultMap="permissionResultMap">
         <include refid="selectPermissionSql"/>
         sys_permission WHERE sys_permission.pid = 0
     </select>
-
+    <!--根据父节点查询子节点-->
     <select id="findChildPermissions" resultMap="permissionResultMap">
         <include refid="selectPermissionSql"/>
         sys_permission WHERE sys_permission.pid = #{pid}
     </select>
-
+    <!--查询所有权限信息的id-->
     <select id="findAllPermissionsIds" resultType="java.lang.Integer">
         SELECT
         sys_permission.id
         FROM
         sys_permission
     </select>
-
+    <!--查询某角色的所有权限的id-->
     <select id="findPermissionsIdsByRoleId" resultType="java.lang.Integer">
         SELECT
         sys_permission.id

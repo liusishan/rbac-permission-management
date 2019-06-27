@@ -10,21 +10,21 @@
             ( #{roleId}, #{permissionId} )
         </foreach>
     </insert>
-
+    <!--删除角色对应的所有权限信息-->
     <delete id="deleteRolePermissions">
         DELETE FROM sys_role_permission WHERE role_id = #{roleId} AND permission_id in
         <foreach collection="permissionIds" item="permissionId" open="(" close=")" separator=",">
             #{permissionId}
         </foreach>
     </delete>
-
+     <!--删除权限对应的所有角色信息-->
     <delete id="deletePermissionRoles">
         DELETE FROM sys_role_permission WHERE permission_id = #{permissionId} AND role_id in
         <foreach collection="roleIds" item="roleId" open="(" close=")" separator=",">
             #{roleId}
         </foreach>
     </delete>
-
+     <!--删除当前角色所有的权限-->
     <delete id="deleteRoleAllPermissions">
         DELETE FROM sys_role_permission WHERE sys_role_permission.role_id = #{roleId}
     </delete>
