@@ -1,5 +1,5 @@
 package cn.king.config;
-
+            
 import cn.king.interceptor.AuthorizationInterceptor;
 import cn.king.interceptor.AuthenticateInterceptor;
 import org.springframework.context.annotation.Bean;
