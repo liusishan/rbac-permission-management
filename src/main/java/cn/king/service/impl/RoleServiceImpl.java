@@ -15,10 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @author: wcj@king.cn
- * @createTime: 2019/6/14 16:41
- * @title:
- * @description:
+ * @author: wcj
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)

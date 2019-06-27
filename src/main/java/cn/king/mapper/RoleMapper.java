@@ -5,12 +5,8 @@ import cn.king.entities.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
 /**
- * @author: wcjl@king.cn
- * @createTime: 2019/6/14 16:44
- * @title:
- * @description:
+ * @author: wcj
  */
 public interface RoleMapper {
     /**

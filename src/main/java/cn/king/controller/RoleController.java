@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * @author: wcj@king.cn
- * @createTime: 2019/6/14 16:48
- * @title:
- * @description:
+ * @author: wcj
  */
 @Controller
 @RequestMapping("role")
@@ -26,11 +23,7 @@ public class RoleController {
     private RolePermissionService rolePermissionService;
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/17 15:24
-     * @param: []
-     * @return: cn.king.common.http.HttpResult
-     * @description:
+     * @author: wcj
      */
     @GetMapping("/findAll")
     public HttpResult findAll() {
@@ -38,11 +31,8 @@ public class RoleController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/20 12:37
-     * @param: [role, pageNumber, limit]
-     * @return: java.lang.Object
-     * @description: 分页
+     * @author: wcj
+     * 分页
      */
     @ResponseBody
     @GetMapping("/rolePaging")
@@ -57,11 +47,7 @@ public class RoleController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/22 13:37
-     * @param: []
-     * @return: cn.king.common.http.HttpResult
-     * @description: 给角色分配权限
+     * @author: wcj
      */
     @ResponseBody
     @PostMapping("/doAssign")
@@ -70,11 +56,7 @@ public class RoleController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/17 15:23
-     * @param: []
-     * @return: java.lang.String
-     * @description: 跳转到权限分配页面
+     * @author: wcj
      */
     @GetMapping("/assign/{roleId}")
     public String toAssignPermissionPage(@PathVariable("roleId")Integer roleId, Model model) {

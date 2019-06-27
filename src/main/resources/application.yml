@@ -1,5 +1,5 @@
 spring:
-  #  配置mysql数据源
+  #  配置mysql.数据源
   datasource:
     username: root
     password: root

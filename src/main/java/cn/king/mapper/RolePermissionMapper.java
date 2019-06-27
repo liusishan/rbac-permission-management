@@ -3,10 +3,7 @@ package cn.king.mapper;
 import java.util.Map;
 
 /**
- * @author: wcj@king.cn
- * @createTime: 2019/6/14 16:44
- * @title:
- * @description:
+ * @author: wcj
  */
 public interface RolePermissionMapper {
 

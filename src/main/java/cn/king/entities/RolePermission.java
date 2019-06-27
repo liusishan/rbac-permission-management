@@ -4,10 +4,7 @@ import cn.king.common.model.BaseModel;
 import lombok.*;
 
 /**
- * @author: wcj@king.cn
- * @createTime: 2019/6/14 16:27
- * @title:
- * @description:
+ * @author: wcj
  */
 // 打印父类的toString
 @ToString(callSuper = true)

@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 /**
- * @author: wcj@king.cn
- * @createTime: 2019/6/14 16:48
- * @title:
- * @description:
+ * @author: wcj
  */
 @Controller
 @RequestMapping("permission")
@@ -25,11 +22,7 @@ public class PermissionController {
     private PermissionService permissionService;
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/24 8:47
-     * @param: [permission]
-     * @return: cn.king.common.http.HttpResult
-     * @description: 修改权限
+     * @author: wcj
      */
     @ResponseBody
     @PostMapping("/edit")
@@ -38,11 +31,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/23 17:26
-     * @param: [permission]
-     * @return: cn.king.common.http.HttpResult
-     * @description: 添加一个新权限
+     * @author: wcj
      */
     @ResponseBody
     @PostMapping("/insertPermission")
@@ -56,11 +45,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/22 15:10
-     * @param: []
-     * @return: cn.king.entities.Permission
-     * @description: 获取系统中所有的权限信息树
+     * @author: wcj
      */
     @ResponseBody
     @PostMapping("/loadData")
@@ -69,10 +54,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/20 15:48
-     * @param: [roleid]
-     * @return: cn.king.entities.Permission
+     * @author: wcj
      * @description: 获取系统中所有的权限信息树, 如果该角色拥有这个权限,
      * 那么将这个的选中状态设置为T.
      * <p>
@@ -85,11 +67,8 @@ public class PermissionController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/23 15:05
-     * @param: [permissionId]
-     * @return: cn.king.common.http.HttpResult
-     * @description: 删除权限信息
+     * @author: wcj
+     * 删除权限信息
      */
     @ResponseBody
     @PostMapping("/delete")
@@ -98,11 +77,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/23 14:48
-     * @param: [id]
-     * @return: java.lang.String
-     * @description: 跳转到权限修改页面
+     跳转到权限修改页面
      */
     @GetMapping("/edit/{id}")
     public String toPermissionEditPage(@PathVariable("id") Integer id, Model model) {
@@ -111,11 +86,7 @@ public class PermissionController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/23 14:44
-     * @param: [parentNodeId]
-     * @return: java.lang.String
-     * @description: 跳转到权限添加页面
+     * @author: wcj
      */
     @GetMapping("/add/{parentNodeId}")
     public String toPermissionAddPage(@PathVariable("parentNodeId") Integer parentNodeId, Model model) {
@@ -124,11 +95,8 @@ public class PermissionController {
     }
 
     /**
-     * @author: wcj@king.cn
-     * @createTime: 2019/6/23 20:21
-     * @param: [id]
-     * @return: cn.king.common.http.HttpResult
-     * @description: 根据id查找权限
+     * @author: wcj
+     根据id查找权限
      */
     @ResponseBody
     @GetMapping("/find")

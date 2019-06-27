@@ -9,10 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author: wcj@king.cn
- * @createTime: 2019/6/14 16:34
- * @title:
- * @description:
+ * @author: wcj
  */
 public interface PermissionService extends BaseService<Permission> {
     /**
