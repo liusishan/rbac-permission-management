@@ -1,5 +1,5 @@
 package cn.king.mapper;
-                                                                      
+                                                                                                  
 import cn.king.entities.User;
 import org.apache.ibatis.annotations.Param;
 
