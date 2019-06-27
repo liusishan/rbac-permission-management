@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:41
  * @title:
  * @description:
@@ -64,7 +64,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/22 14:10
      * @param: [map]
      * @return: java.lang.Integer
