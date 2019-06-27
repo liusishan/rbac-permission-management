@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.util.UUID;
 
 /**
- * 密码工具类
+ *  这是密码工具类
  *
  * @author zsm@shuyuntu.com
  */
@@ -21,7 +21,7 @@ public class PasswordUtils {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/24 21:00
      * @param: [password]
      * @return: java.lang.String
