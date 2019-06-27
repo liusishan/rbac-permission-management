@@ -1,4 +1,5 @@
 # Rbac-Permission-Management 
+（希望老师喜欢我们的文档  给我们高分  老师万岁  耶耶耶耶耶！）
 ![screenshot](img/tittle.png)
 ### 本地部署账号密码
 
@@ -54,7 +55,4 @@
 ![screenshot](img/3.png)
 ![screenshot](img/4.png)
 ![screenshot](img/5.png)
-
-
-希望老师喜欢我们的文档  给我们高分  老师万岁  耶耶耶耶耶！
 
