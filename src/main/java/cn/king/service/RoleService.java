@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:34
  * @title:
  * @description:
@@ -22,7 +22,7 @@ public interface RoleService extends BaseService<Role> {
     List<Role> findRolesByUserId(Integer userId);
 
     /**
-     * 返回用户的角色信息, 一条已经有的角色信息, 一条还没有的角色信息
+     * 返回用户的角色信息 一条已经有的角色信息 一条还没有的角色信息
      * @param userId
      * @return
      */
