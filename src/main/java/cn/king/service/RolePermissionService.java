@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Primary;
 import java.util.Map;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:34
  * @title:
  * @description:
  */
 public interface RolePermissionService extends BaseService<RolePermission> {
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/22 14:10
      * @param: [map]
      * @return: java.lang.Integer
