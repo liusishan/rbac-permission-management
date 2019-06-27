@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:34
  * @title:
  * @description:
@@ -31,7 +31,7 @@ public interface PermissionService extends BaseService<Permission> {
     Permission loadData();
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 17:53
      * @param: [roleId]
      * @return: cn.king.entities.Permission
@@ -41,7 +41,7 @@ public interface PermissionService extends BaseService<Permission> {
     Permission loadAssignData(Integer roleId);
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 17:54
      * @param: [userId, session]
      * @return: java.util.Set<java.lang.String>
@@ -66,7 +66,7 @@ public interface PermissionService extends BaseService<Permission> {
     Integer deletePermissionById(Integer permissionId);
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/23 17:24
      * @param: [permission]
      * @return: java.lang.Integer
@@ -75,7 +75,7 @@ public interface PermissionService extends BaseService<Permission> {
     Integer insertPermission(Permission permission, HttpSession session);
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/24 8:57
      * @param: [permission]
      * @return: java.lang.Integer
@@ -84,7 +84,7 @@ public interface PermissionService extends BaseService<Permission> {
     Integer updatePermission(Permission permission,HttpSession session);
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/24 9:23
      * @param: []
      * @return: java.util.List<cn.king.entities.Permission>
