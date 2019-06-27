@@ -1,5 +1,5 @@
 package cn.king.utils;
-
+     
 import cn.king.common.model.BaseModel;
 
 import java.util.HashMap;
