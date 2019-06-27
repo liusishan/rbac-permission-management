@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * @author: wjl@king.cn
+ * @author: wcj@king.cn
  * @createTime: 2019/6/14 16:48
  * @title:
  * @description:
@@ -26,7 +26,7 @@ public class RoleController {
     private RolePermissionService rolePermissionService;
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/17 15:24
      * @param: []
      * @return: cn.king.common.http.HttpResult
@@ -38,7 +38,7 @@ public class RoleController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/20 12:37
      * @param: [role, pageNumber, limit]
      * @return: java.lang.Object
@@ -57,7 +57,7 @@ public class RoleController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/22 13:37
      * @param: []
      * @return: cn.king.common.http.HttpResult
@@ -70,7 +70,7 @@ public class RoleController {
     }
 
     /**
-     * @author: wjl@king.cn
+     * @author: wcj@king.cn
      * @createTime: 2019/6/17 15:23
      * @param: []
      * @return: java.lang.String
